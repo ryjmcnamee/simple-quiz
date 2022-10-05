@@ -27,11 +27,12 @@ var quizQuestions = [
 
 ]
 //---------------------------//
-//Initialize Event Listeners
+//Initialize Element Variables
 
 var questionBox = document.getElementById("questionBox");
 var answerList = document.getElementById("answerList");
 var submitButton = document.getElementById("submitButton");
+var scoreScreen = document.getElementById("scoreScreen");
 
 
 //---------------------------//
@@ -69,7 +70,8 @@ function submitAnswer(questionIndex,chosenAnswerIndex){
             localStorage.setItem("simple-quiz.score",1)
         }
     }
-    if(questionIndex != quizQuestions.length){displayQuestion(questionIndex+1);}
+
+    if(questionIndex+1 < quizQuestions.length){displayQuestion(questionIndex+1);}
     else{calculateAnswers();};
 
 }
@@ -77,7 +79,12 @@ function submitAnswer(questionIndex,chosenAnswerIndex){
 //---------------------------//
 //Calculate Answers
 
-function calculateAnswers(){};
+function calculateAnswers(){
+
+    scoreScreen.setAttribute("style","display:block;")
+
+
+};
 
 
 //DEBUG 

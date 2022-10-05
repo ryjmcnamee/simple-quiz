@@ -27,7 +27,8 @@ var quizQuestions = [
 
 ]
 //---------------------------//
-//Initialize Element Variables
+//Initialize Global Variables
+const numOfHighScores = 5;
 
 //Containers
 var questionBox = document.getElementById("questionBox");
@@ -47,7 +48,6 @@ retryButton.addEventListener("click", startQuizOver)
 
 //---------------------------//
 //Display Question
-
 function displayQuestion(questionIndex) {
 
     questionText.textContent = quizQuestions[questionIndex].question;
@@ -111,7 +111,8 @@ function recordScore(earnedScore, enteredName) {
         var scoreArrayLength = scoreArray.length
         for (var i = 0; i < scoreArrayLength; i++) {
 
-            if (earnedScore > scoreArray[i].score) { scoreArray.splice(i, 0, recordedScore); break; }
+            if (earnedScore >= scoreArray[i].score) { scoreArray.splice(i, 0, recordedScore); break; }
+            else{scoreArray.push(recordedScore);break;};
         }
     }
     else { scoreArray.push(recordedScore); console.log("empty") }
@@ -121,7 +122,6 @@ function recordScore(earnedScore, enteredName) {
 
 //---------------------------//
 //Display High Scores
-
 function displayHighScores() {
     questionBox.setAttribute("style", "display:none;");
     scoreScreen.setAttribute("style", "display:none;");
@@ -141,4 +141,4 @@ function startQuizOver() {
 
 //DEBUG 
 displayQuestion(0);
-recordScore(18, "TODO FIXME");
+recordScore(18, "TODO FIXME!");

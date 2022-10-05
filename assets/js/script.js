@@ -42,8 +42,8 @@ var retryButton = document.getElementById("retryButton");
 
 //---------------------------//
 //Initialize Event Listeners
-viewHighScoresButton.addEventListener("click",displayHighScores);
-retryButton.addEventListener("click",startQuizOver)
+viewHighScoresButton.addEventListener("click", displayHighScores);
+retryButton.addEventListener("click", startQuizOver)
 
 //---------------------------//
 //Display Question
@@ -52,15 +52,15 @@ function displayQuestion(questionIndex) {
 
     questionText.textContent = quizQuestions[questionIndex].question;
 
-    if(answerList.childElementCount>0){
+    if (answerList.childElementCount > 0) {
         answerList.innerHTML = "";
     }
 
-    for(var i = 0; i < quizQuestions[questionIndex].answers.length;i++){
+    for (var i = 0; i < quizQuestions[questionIndex].answers.length; i++) {
         var answerButton = document.createElement("button");
 
-        answerButton.setAttribute("value",i);
-        answerButton.setAttribute("onclick","submitAnswer("+questionIndex+","+i+")");
+        answerButton.setAttribute("value", i);
+        answerButton.setAttribute("onclick", "submitAnswer(" + questionIndex + "," + i + ")");
         answerButton.innerHTML = quizQuestions[questionIndex].answers[i].text;
         console.log(answerButton);
         answerList.appendChild(answerButton);
@@ -70,53 +70,77 @@ function displayQuestion(questionIndex) {
 //---------------------------//
 //Submit Answer
 
-function submitAnswer(questionIndex,chosenAnswerIndex){
-    
-    if(quizQuestions[questionIndex].answers[chosenAnswerIndex].correct){
-        if(questionIndex != 0){
-            localStorage.setItem("simple-quiz.score",(parseInt(localStorage.getItem("simple-quiz.score"))+1))
+function submitAnswer(questionIndex, chosenAnswerIndex) {
+
+    if (quizQuestions[questionIndex].answers[chosenAnswerIndex].correct) {
+        if (questionIndex != 0) {
+            localStorage.setItem("simple-quiz.score", (parseInt(localStorage.getItem("simple-quiz.score")) + 1))
         }
-        else{
-            localStorage.setItem("simple-quiz.score",1)
+        else {
+            localStorage.setItem("simple-quiz.score", 1)
         }
     }
 
-    if(questionIndex+1 < quizQuestions.length){displayQuestion(questionIndex+1);}
-    else{displayScore()};
+    if (questionIndex + 1 < quizQuestions.length) { displayQuestion(questionIndex + 1); }
+    else {
+        displayScore()
+    };
 
 }
 
 //---------------------------//
 //Display Score
 
-function displayScore(){
+function displayScore() {
     var score = document.getElementById("score");
 
-    questionBox.setAttribute("style","display:none;");
-    scoreScreen.setAttribute("style","display:block;");
+    questionBox.setAttribute("style", "display:none;");
+    scoreScreen.setAttribute("style", "display:block;");
 
 
 };
 
 //---------------------------//
+//Record Score
+
+function recordScore(earnedScore, enteredName) {
+    var scoreArray = JSON.parse(localStorage.getItem("simple-quiz.highScores"))
+    if (scoreArray == null) { scoreArray = [] };
+    console.log(scoreArray);
+    var recordedScore = { score: earnedScore, name: enteredName }
+    if (scoreArray.length > 0) {
+        var scoreArrayLength = scoreArray.length
+        for (var i = 0; i < scoreArrayLength; i++) {
+            console.log(1)
+             if (earnedScore > scoreArray[i].score) { scoreArray.splice(i,0,recordedScore); break;}
+        }
+    }
+    else { scoreArray.push(recordedScore); console.log("empty") }
+    console.log(scoreArray);
+    localStorage.setItem("simple-quiz.highScores", JSON.stringify(scoreArray.slice(0, 9)));
+}
+
+6
+//---------------------------//
 //Display High Scores
 
-function displayHighScores(){
-    questionBox.setAttribute("style","display:none;");
-    scoreScreen.setAttribute("style","display:none;");
-    highScoreScreen.setAttribute("style","display:block;");
-    retryButton.setAttribute("style","display:block;");
+function displayHighScores() {
+    questionBox.setAttribute("style", "display:none;");
+    scoreScreen.setAttribute("style", "display:none;");
+    highScoreScreen.setAttribute("style", "display:block;");
+    retryButton.setAttribute("style", "display:block;");
 }
 
 //---------------------------//
 //Start Quiz Over
-function startQuizOver(){
+function startQuizOver() {
     displayQuestion(0);
-    questionBox.setAttribute("style","display:block;");
-    scoreScreen.setAttribute("style","display:none;");
-    highScoreScreen.setAttribute("style","display:none;");
-    retryButton.setAttribute("style","display:none;");
+    questionBox.setAttribute("style", "display:block;");
+    scoreScreen.setAttribute("style", "display:none;");
+    highScoreScreen.setAttribute("style", "display:none;");
+    retryButton.setAttribute("style", "display:none;");
 }
 
 //DEBUG 
 displayQuestion(0);
+recordScore(18, "TODO FIXME");

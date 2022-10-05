@@ -36,6 +36,7 @@ var questionText = document.getElementById("questionText");
 var answerList = document.getElementById("answerList");
 var scoreScreen = document.getElementById("scoreScreen");
 var highScoreScreen = document.getElementById("highScoreScreen");
+var highScoreList = document.getElementById("highScoreList");
 
 //Inputs
 var viewHighScoresButton = document.getElementById("viewHighScoresButton");
@@ -123,10 +124,45 @@ function recordScore(earnedScore, enteredName) {
 //---------------------------//
 //Display High Scores
 function displayHighScores() {
+    //Change displayed screen
     questionBox.setAttribute("style", "display:none;");
     scoreScreen.setAttribute("style", "display:none;");
     highScoreScreen.setAttribute("style", "display:block;");
     retryButton.setAttribute("style", "display:block;");
+
+    //Initialize/clear list
+    highScoreList.innerHTML = '';
+
+    //Container to be filled
+    var highScoreListContainer = document.createElement("ol");
+
+    //Storage Variable
+    var highScoreListArray = JSON.parse(localStorage.getItem("simple-quiz.highScores"));
+
+    try {
+        for (var i = 0; i < numOfHighScores; i++) {
+            //Locals
+            var listItem = document.createElement("li");
+            
+            //Score object
+            var selectedScore = highScoreListArray[i];
+
+            //Assemble string
+            listItem.textContent =
+                " "
+                + selectedScore.name
+                + " EARNED "
+                + selectedScore.score
+                + " PTS!";
+            //Append completed list item
+            highScoreListContainer.appendChild(listItem);
+        }
+    }
+    catch {
+        //Triggers once end of list
+    }
+    //Append
+    highScoreList.appendChild(highScoreListContainer);
 }
 
 //---------------------------//

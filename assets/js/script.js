@@ -62,7 +62,7 @@ function displayQuestion(questionIndex) {
         answerButton.setAttribute("value", i);
         answerButton.setAttribute("onclick", "submitAnswer(" + questionIndex + "," + i + ")");
         answerButton.innerHTML = quizQuestions[questionIndex].answers[i].text;
-        console.log(answerButton);
+
         answerList.appendChild(answerButton);
     }
 }
@@ -106,21 +106,19 @@ function displayScore() {
 function recordScore(earnedScore, enteredName) {
     var scoreArray = JSON.parse(localStorage.getItem("simple-quiz.highScores"))
     if (scoreArray == null) { scoreArray = [] };
-    console.log(scoreArray);
     var recordedScore = { score: earnedScore, name: enteredName }
     if (scoreArray.length > 0) {
         var scoreArrayLength = scoreArray.length
         for (var i = 0; i < scoreArrayLength; i++) {
-            console.log(1)
-             if (earnedScore > scoreArray[i].score) { scoreArray.splice(i,0,recordedScore); break;}
+
+            if (earnedScore > scoreArray[i].score) { scoreArray.splice(i, 0, recordedScore); break; }
         }
     }
     else { scoreArray.push(recordedScore); console.log("empty") }
-    console.log(scoreArray);
     localStorage.setItem("simple-quiz.highScores", JSON.stringify(scoreArray.slice(0, 9)));
 }
 
-6
+
 //---------------------------//
 //Display High Scores
 

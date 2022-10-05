@@ -9,7 +9,7 @@ var quizQuestions = [
         ]
     },
     {
-        question: "Question 1",
+        question: "Question 2",
         answers: [
             { text: "Answer 1", correct: true },
             { text: "Answer 2", correct: false },
@@ -17,7 +17,7 @@ var quizQuestions = [
         ]
     },
     {
-        question: "Question 1",
+        question: "Question 3",
         answers: [
             { text: "Answer 1", correct: true },
             { text: "Answer 2", correct: false },
@@ -40,11 +40,16 @@ var submitButton = document.getElementById("submitButton");
 function displayQuestion(questionIndex) {
 
     questionBox.textContent = quizQuestions[questionIndex].question;
+
+    if(answerList.childElementCount>0){
+        answerList.innerHTML = "";
+    }
+
     for(var i = 0; i < quizQuestions[questionIndex].answers.length;i++){
         var answerButton = document.createElement("button");
 
         answerButton.setAttribute("value",i);
-        answerButton.setAttribute("onclick","submitAnswer()");
+        answerButton.setAttribute("onclick","submitAnswer("+questionIndex+")");
         answerButton.innerHTML = quizQuestions[questionIndex].answers[i].text;
         console.log(answerButton);
         answerList.appendChild(answerButton);
@@ -52,8 +57,18 @@ function displayQuestion(questionIndex) {
 }
 
 //---------------------------//
-//Advance Question
+//Submit Answer
+
+function submitAnswer(previousQuestionIndex){
+    try{displayQuestion(previousQuestionIndex+1);}
+    catch{calculateAnswers()};
+}
+
+//---------------------------//
+//Calculate Answers
+
+function calculateAnswers();
 
 
 //DEBUG 
-displayQuestion(1);
+displayQuestion(0);

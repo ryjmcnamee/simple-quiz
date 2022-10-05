@@ -1,4 +1,4 @@
-//Initialize Quiz Object
+//Initialize Quiz Question Object
 var quizQuestions = [
     {
         question: "Question 1",
@@ -116,7 +116,7 @@ function recordScore(earnedScore, enteredName) {
         }
     }
     else { scoreArray.push(recordedScore); console.log("empty") }
-    localStorage.setItem("simple-quiz.highScores", JSON.stringify(scoreArray.slice(0, 9)));
+    localStorage.setItem("simple-quiz.highScores", JSON.stringify(scoreArray.slice(0, numOfHighScores)));
 }
 
 

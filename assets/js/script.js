@@ -49,7 +49,7 @@ function displayQuestion(questionIndex) {
         var answerButton = document.createElement("button");
 
         answerButton.setAttribute("value",i);
-        answerButton.setAttribute("onclick","submitAnswer("+questionIndex+")");
+        answerButton.setAttribute("onclick","submitAnswer("+questionIndex+","+i+")");
         answerButton.innerHTML = quizQuestions[questionIndex].answers[i].text;
         console.log(answerButton);
         answerList.appendChild(answerButton);
@@ -59,15 +59,25 @@ function displayQuestion(questionIndex) {
 //---------------------------//
 //Submit Answer
 
-function submitAnswer(previousQuestionIndex){
-    try{displayQuestion(previousQuestionIndex+1);}
-    catch{calculateAnswers()};
+function submitAnswer(questionIndex,chosenAnswerIndex){
+    
+    if(quizQuestions[questionIndex].answers[chosenAnswerIndex].correct){
+        if(questionIndex != 0){
+            localStorage.setItem("simple-quiz.score",(parseInt(localStorage.getItem("simple-quiz.score"))+1))
+        }
+        else{
+            localStorage.setItem("simple-quiz.score",1)
+        }
+    }
+    if(questionIndex != quizQuestions.length){displayQuestion(questionIndex+1);}
+    else{calculateAnswers();};
+
 }
 
 //---------------------------//
 //Calculate Answers
 
-function calculateAnswers();
+function calculateAnswers(){};
 
 
 //DEBUG 

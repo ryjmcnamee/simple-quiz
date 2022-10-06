@@ -50,17 +50,25 @@ retryButton.addEventListener("click", startQuizOver)
 //---------------------------//
 //CSS Overrides
 var robotoFont = "font-family:Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;";
+
 var answerButtonCssOverride = "border-radius:12px;" 
                                 + "margin-inline:50px;" 
                                 + "font-weight:bold;" 
+                                + "margin-top:50px;"
                                 + robotoFont;
 
+var headingTwoCssOverride = robotoFont
+                            + "font-weight:bold;"
+                            + "color:white;";
 //---------------------------//
 //Display Question
 function displayQuestion(questionIndex) {
     //Change Display
     viewHighScoresButton.setAttribute("style","display:block;");
 
+    //Override Question CSS
+    questionText.setAttribute("style",headingTwoCssOverride);
+    
     //Populate question text element
     questionText.textContent = quizQuestions[questionIndex].question;
 

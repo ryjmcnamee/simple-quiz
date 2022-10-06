@@ -31,6 +31,7 @@ var quizQuestions = [
 const numOfHighScores = 5;
 
 //Containers
+var instructions = document.getElementById("instructions");
 var questionBox = document.getElementById("questionBox");
 var questionText = document.getElementById("questionText");
 var answerList = document.getElementById("answerList");
@@ -41,11 +42,15 @@ var highScoreList = document.getElementById("highScoreList");
 //Inputs
 var viewHighScoresButton = document.getElementById("viewHighScoresButton");
 var retryButton = document.getElementById("retryButton");
+var startQuizButton = document.getElementById("startQuizButton");
 
 //---------------------------//
 //Initialize Event Listeners
 viewHighScoresButton.addEventListener("click", displayHighScores);
-retryButton.addEventListener("click", startQuizOver)
+retryButton.addEventListener("click", startQuizOver);
+startQuizButton.addEventListener("click",startQuiz);
+
+
 
 //---------------------------//
 //CSS Overrides
@@ -60,15 +65,23 @@ var answerButtonCssOverride = "border-radius:12px;"
 var headingTwoCssOverride = robotoFont
                             + "font-weight:bold;"
                             + "color:white;";
+//----------------------------//
+//Start Quiz
+function startQuiz(){
+    displayQuestion(0);
+}
+
 //---------------------------//
 //Display Question
 function displayQuestion(questionIndex) {
     //Change Display
+    questionBox.setAttribute("style","display:block;");
     viewHighScoresButton.setAttribute("style","display:block;");
+    instructions.setAttribute("style","display:none");
 
     //Override Question CSS
     questionText.setAttribute("style",headingTwoCssOverride);
-    
+
     //Populate question text element
     questionText.textContent = quizQuestions[questionIndex].question;
 
@@ -122,6 +135,7 @@ function displayScore() {
     //Change displayed screen
     questionBox.setAttribute("style", "display:none;");
     scoreScreen.setAttribute("style", "display:block;");
+    instructions.setAttribute("style","display:none");
 
     //Locals
     var score = localStorage.getItem("simple-quiz.score");
@@ -129,7 +143,7 @@ function displayScore() {
 
     var highScoreSubmissionForm = document.createElement("form");
     var highScoreSubmissionInstructionsSpan = document.createElement("span");
-    var highScoreSubmissionInstructions = "Please enter your name below to save your highscore -";
+    var highScoreSubmissionInstructions = "Please enter your name below to save your highscore ";
     var highScoreNameInput = document.createElement("input");
     var highScoreSubmitBtn = document.createElement("button");
 
@@ -144,6 +158,7 @@ function displayScore() {
     highScoreNameInput.setAttribute('type', 'text');
     highScoreNameInput.setAttribute('placeholder', 'e.g Jimmy Proton');
 
+    highScoreSubmitBtn.setAttribute('class','waves-effect waves-light btn-large')
     highScoreSubmitBtn.setAttribute('type', 'button');
     highScoreSubmitBtn.textContent = 'Submit';
 
@@ -214,6 +229,7 @@ function recordScore(earnedScore, enteredName) {
 //Display High Scores
 function displayHighScores() {
     //Change displayed screen
+    instructions.setAttribute("style","display:none");
     questionBox.setAttribute("style", "display:none;");
     scoreScreen.setAttribute("style", "display:none;");
     highScoreScreen.setAttribute("style", "display:block;");
@@ -258,15 +274,16 @@ function displayHighScores() {
 //---------------------------//
 //Start Quiz Over
 function startQuizOver() {
-    displayQuestion(0);
-    questionBox.setAttribute("style", "display:block;");
+    instructions.setAttribute("style","display:none");
+    questionBox.setAttribute("style", "display:none;");
     scoreScreen.setAttribute("style", "display:none;");
     highScoreScreen.setAttribute("style", "display:none;");
     retryButton.setAttribute("style", "display:none;");
+    startQuiz();
 }
 
 //DEBUG 
-displayQuestion(0);
+
 recordScore(18, "Entry 2");
 recordScore(16, "Entry 4");
 recordScore(18, "Entry 1");

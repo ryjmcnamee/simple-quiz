@@ -1,0 +1,23 @@
+.highScoreScreen{
+    max-width:30%;
+    color:white;
+}
+
+#instructions{
+    padding-top:30vh;
+    font-size:x-large;
+    color:white;
+}
+
+#scoreScreen{
+    color:white;
+}
+hr {
+    color:white;
+    padding:0 5vh;
+    width:65vw;
+}
+#scoreScreen input{
+    padding-inline:20vw;
+    color:white;
+}

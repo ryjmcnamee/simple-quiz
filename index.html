@@ -2,17 +2,24 @@
 <html>
 <head>
     <link href="assets\css\materialize.css" rel="stylesheet">
+    <link href="assets\css\style.css" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 </head>
 <body class="center-align grey darken-4">
     <button id="viewHighScoresButton" class = "waves-effect waves-light btn-large">View High Scores</button>
-    <div id="questionBox">
+    <div id="instructions">The following quiz is a demonstration of an open ended quiz platform. The first answer will be correct, the following two will be incorrect.
+                            Any incorrect answer will subtract 5 seconds from the timer, every correct answer will add 2.
+                            Please feel welcome to test the system at your leisure.</br><hr>
+    <button id="startQuizButton" class = "waves-effect waves-light btn-large">Start Quiz</button>
+                        </div>
+    <div id="questionBox" style="display:none;">
         <h2 id="questionText"></h2>
         <span id="answerList"></span>
     </div>
+    <button id="retryButton" style="display:none;" class="waves-effect waves-light btn-large">Retry Quiz</button>
     <div id="scoreScreen" style="display:none;">Score Screen TODO REMOVE</div>
-    <div id="highScoreScreen" style="display:none;"><div id="highScoreList"></div></div>
-    <button id="retryButton" style="display:none;">Retry Quiz</button>
+    <div id="highScoreScreen" style="display:none;" class="center-align highScoreScreen"><h5 id="highScoreList"></h5></div>
+    
     <script src="./assets/js/script.js"></script>
     <script src="./assets/js/materialize.js"></script>
 </body>

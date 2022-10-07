@@ -215,7 +215,7 @@ function submitAnswer(questionIndex, chosenAnswerIndex) {
 //---------------------------//
 //Display Score
 function displayScore() {
-    
+    //If highscore screen is displayed, exit early with return
     if(highScoreScreen.getAttribute("style") == "display:block;"){return;}
 
     //Change displayed screen

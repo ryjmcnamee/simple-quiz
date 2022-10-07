@@ -21,3 +21,27 @@ hr {
     padding-inline:20vw;
     color:white;
 }
+
+#timerElement {
+    color:white;
+    margin-top:10vh;
+}
+@media only screen and (max-device-width: 600px){
+    body{
+        background-color:white;
+    }
+    .waves-effect.waves-light.btn-large.red.darken-1{
+        width:90%;
+        font-size:xx-large;
+    }
+    #viewHighScoresButton, #retryButton, #startQuizButton, #instruction, #scoreScreen{
+        font-size:xxx-large;
+    }
+    #scoreScreen input{
+        font-size:xx-large;
+    }
+    .waves-effect.waves-light.btn-large{
+        font-size:xx-large;
+    }
+
+}

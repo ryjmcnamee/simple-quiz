@@ -24,11 +24,87 @@ var quizQuestions = [
             { text: "Answer 3", correct: false },
         ]
     },
+    {
+        question: "Question 4",
+        answers: [
+            { text: "Answer 1", correct: true },
+            { text: "Answer 2", correct: false },
+            { text: "Answer 3", correct: false },
+        ]
+    },
+    {
+        question: "Question 5",
+        answers: [
+            { text: "Answer 1", correct: true },
+            { text: "Answer 2", correct: false },
+            { text: "Answer 3", correct: false },
+        ]
+    },
+    {
+        question: "Question 6",
+        answers: [
+            { text: "Answer 1", correct: true },
+            { text: "Answer 2", correct: false },
+            { text: "Answer 3", correct: false },
+        ]
+    },
+    {
+        question: "Question 7",
+        answers: [
+            { text: "Answer 1", correct: true },
+            { text: "Answer 2", correct: false },
+            { text: "Answer 3", correct: false },
+        ]
+    },
+    {
+        question: "Question 8",
+        answers: [
+            { text: "Answer 1", correct: true },
+            { text: "Answer 2", correct: false },
+            { text: "Answer 3", correct: false },
+        ]
+    },
+    {
+        question: "Question 9",
+        answers: [
+            { text: "Answer 1", correct: true },
+            { text: "Answer 2", correct: false },
+            { text: "Answer 3", correct: false },
+        ]
+    },
+    {
+        question: "Question 10",
+        answers: [
+            { text: "Answer 1", correct: true },
+            { text: "Answer 2", correct: false },
+            { text: "Answer 3", correct: false },
+        ]
+    },
+    {
+        question: "Question 11",
+        answers: [
+            { text: "Answer 1", correct: true },
+            { text: "Answer 2", correct: false },
+            { text: "Answer 3", correct: false },
+        ]
+    },
+    {
+        question: "Question 12",
+        answers: [
+            { text: "Answer 1", correct: true },
+            { text: "Answer 2", correct: false },
+            { text: "Answer 3", correct: false },
+        ]
+    },
 
 ]
 //---------------------------//
 //Initialize Global Variables
 const numOfHighScores = 5;
+
+//const is default/starting timer value, timeLeftValue is mutable timer variable
+const startingQuizSeconds = 15;
+var timeLeftValue = startingQuizSeconds;
 
 //Containers
 var instructions = document.getElementById("instructions");
@@ -38,6 +114,7 @@ var answerList = document.getElementById("answerList");
 var scoreScreen = document.getElementById("scoreScreen");
 var highScoreScreen = document.getElementById("highScoreScreen");
 var highScoreList = document.getElementById("highScoreList");
+var timerElement = document.getElementById("timerElement");
 
 //Inputs
 var viewHighScoresButton = document.getElementById("viewHighScoresButton");
@@ -68,12 +145,17 @@ var headingTwoCssOverride = robotoFont
 //----------------------------//
 //Start Quiz
 function startQuiz(){
+    //Start Timer/Countdown
+    timeLeftValue = startingQuizSeconds;
+    startTimer();
+
     displayQuestion(0);
 }
 
 //---------------------------//
-//Display Question
+//Display Question - start of quiz
 function displayQuestion(questionIndex) {
+    
     //Change Display
     questionBox.setAttribute("style","display:block;");
     viewHighScoresButton.setAttribute("style","display:block;");
@@ -112,6 +194,7 @@ function displayQuestion(questionIndex) {
 function submitAnswer(questionIndex, chosenAnswerIndex) {
     //If correct
     if (quizQuestions[questionIndex].answers[chosenAnswerIndex].correct) {
+        timeLeftValue = timeLeftValue+2;
         //If score exists -> add +1
         //Else -> set to 1
         if (questionIndex != 0) {
@@ -121,10 +204,10 @@ function submitAnswer(questionIndex, chosenAnswerIndex) {
             localStorage.setItem("simple-quiz.score", 1)
         }
     }
-
+    else{timeLeftValue = timeLeftValue - 5;}
     if (questionIndex + 1 < quizQuestions.length) { displayQuestion(questionIndex + 1); }
     else {
-        displayScore()
+        timeLeftValue = 0;
     };
 
 }
@@ -132,6 +215,9 @@ function submitAnswer(questionIndex, chosenAnswerIndex) {
 //---------------------------//
 //Display Score
 function displayScore() {
+    
+    if(highScoreScreen.getAttribute("style") == "display:block;"){return;}
+
     //Change displayed screen
     questionBox.setAttribute("style", "display:none;");
     scoreScreen.setAttribute("style", "display:block;");
@@ -143,7 +229,7 @@ function displayScore() {
 
     var highScoreSubmissionForm = document.createElement("form");
     var highScoreSubmissionInstructionsSpan = document.createElement("span");
-    var highScoreSubmissionInstructions = "Please enter your name below to save your highscore ";
+    var highScoreSubmissionInstructions = "Please enter your name below to save your highscore";
     var highScoreNameInput = document.createElement("input");
     var highScoreSubmitBtn = document.createElement("button");
 
@@ -223,11 +309,35 @@ function recordScore(earnedScore, enteredName) {
     //Send first N scores to local storage
     localStorage.setItem("simple-quiz.highScores", JSON.stringify(scoreArray.slice(0, numOfHighScores)));
 }
+//---------------------------//
+//Timer Function
+function startTimer() {
+
+    //Store and execute function to control countdown
+    var timeInterval = setInterval(function () {
+        //Check to see if navigated from screen
+        if(questionBox.getAttribute("style") != "display:block;"){return;}
+        
+        //if & elif control countdown timer, else executes on 0
+        if (timeLeftValue > 1) {
+            timerElement.textContent = timeLeftValue + ' seconds remaining';
+            timeLeftValue--;
+        } else if (timeLeftValue === 1) {
+            timerElement.textContent = timeLeftValue + ' second remaining';
+            timeLeftValue--;
+        } else {
+            timerElement.textContent = '';
+            clearInterval(timeInterval);
+            displayScore();
+        }
+    }, 1000);
+}
 
 
 //---------------------------//
 //Display High Scores
 function displayHighScores() {
+
     //Change displayed screen
     instructions.setAttribute("style","display:none");
     questionBox.setAttribute("style", "display:none;");
@@ -282,11 +392,4 @@ function startQuizOver() {
     startQuiz();
 }
 
-//DEBUG 
 
-recordScore(18, "Entry 2");
-recordScore(16, "Entry 4");
-recordScore(18, "Entry 1");
-recordScore(17, "Entry 3");
-recordScore(12, "Not Visible");
-recordScore(12, "Entry 5");
